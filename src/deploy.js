@@ -22,13 +22,16 @@ const rest = new REST({version: '10'}).setToken(TOKEN);
 // deploy dos cmd
 (async () => {
     try {
-        console.log('resetando comandos')
+        console.log(`Resentando ${commands.length} comandos...`)
+    
+        // PUT
         const data = await rest.put(
-            Routes.applicationGuildCommand(CLIENT_ID, GUILD_ID),
+            Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
             {body: commands}
         )
-        console.log('comandos carregados')
-    } catch (error){
+            console.log("Comandos registrados com sucesso!")
+    }
+    catch (error){
         console.error(error)
     }
 })()

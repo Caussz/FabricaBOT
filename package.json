@@ -16,6 +16,9 @@
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
     "fs": "^0.0.1-security",
-    "path": "^0.12.7"
+    "human-readable": "^0.2.1",
+    "os": "^0.1.2",
+    "path": "^0.12.7",
+    "performance-now": "^2.1.0"
   }
 }

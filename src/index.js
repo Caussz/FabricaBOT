@@ -9,10 +9,6 @@ const { TOKEN } = process.env
 // inicio bot
 const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 client.commands = new Collection()
-// defs globais
-global.reply = async (text) => {
-    await interaction.reply(text)
-}
 // Import dos comandos
 const commandsPath = path.join(__dirname, 'commands')
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'))
@@ -33,9 +29,24 @@ client.once(Events.ClientReady, c => {
 });
 client.login(TOKEN)
 
-client.on(Events.InteractionCreate, interacao => {
-    if (!interacao.isChatInputCommand()) { 
-        return console.log(interacao)
-        
+// Interacoes 
+client.on(Events.InteractionCreate, async interacao => {
+    // defs globais
+    global.reply = async (text) => {
+        await interacao.reply(text)
     }
+    if (!interacao.isChatInputCommand()) return
+    const comando = interacao.client.commands.get(interacao.commandName)
+    if(!comando) {
+        console.error(`comando nao encontrado`)
+        return
+    } try {
+        await comando.execute(interacao)
+    }  catch (error) {
+        console.error(error)
+        await interacao.reply("Houve um erro ao executar esse comando!")
+    }
+     console.log(interacao)
+
 })
+
