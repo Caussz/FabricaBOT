@@ -93,7 +93,12 @@ client.on(Events.InteractionCreate, async (interacao) => {
                  });
                  await interacao.editReply(`➩ Resposta para a pergunta: "${pergunta}"\n${completion.data.choices[0].text}`)
                 break
-    
+    case 'fabrica':
+        const ilhas = await interacao.options.get('-ilhas').value
+        console.log(ilhas)
+        reply(`➩ ${ilhas}`)
+
+        break
         default:
             if (!interacao.isChatInputCommand()) return
             const comando = interacao.client.commands.get(interacao.commandName)

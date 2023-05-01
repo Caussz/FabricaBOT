@@ -21,6 +21,47 @@ const commands = [
                 required: true
             }
         ]
+    },
+    {
+        name: 'fabrica',
+        description: 'Opcoes de comandos relacionados a fabrica',
+        options: [
+            {
+                name: '-ilhas',
+                description: 'ilhas da fabrica',
+                type: ApplicationCommandOptionType.String,
+                choices: [
+                    {
+                        name: 'Todas as ilhas',
+                        value: '-i'
+                    },
+                    {
+                        name: 'Ilha A',
+                        value: '-ia'
+                    },
+                    {
+                        name: 'Ilha A',
+                        value: '-ia'
+                    },
+                    {
+                        name: 'Ilha B',
+                        value: '-ib'
+                    },
+
+                    {
+                        name: 'Ilha C',
+                        value: '-ic'
+                    },
+                    {
+                        name: 'Ilha D',
+                        value: '-id'
+                    },
+
+
+                ],
+                required: true
+            }
+        ]
     }
 ]
 
