@@ -1,4 +1,4 @@
-const { REST, Routes } = require('discord.js')
+const { REST, Routes, ApplicationCommandType, ApplicationCommandOptionType } = require('discord.js')
 const dotenv = require('dotenv')
 const fs =  require('fs')
 const path = require('path')
@@ -9,7 +9,20 @@ const { TOKEN, CLIENT_ID, GUILD_ID } = process.env
 const commandsPath = path.join(__dirname, 'commands')
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'))
 
-const commands = []
+const commands = [
+    {
+        name: 'gpt',
+        description: 'Responde a pergunta',
+        options: [
+            {
+                name: 'pergunta',
+                description: 'Digite sua pergunta',
+                type: ApplicationCommandOptionType.String,
+                required: true
+            }
+        ]
+    }
+]
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`)
