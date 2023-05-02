@@ -75,8 +75,8 @@ client.on(Events.InteractionCreate, async (interacao) => {
     const grupName = interacao.guild.name
     const idCmd = interacao.commandId
 // log dos comandos 
-    if (command) console.log(`>> [ Discord ] - C: ${command} de ${pushname}`);
-    else console.log(`>> [ Discord ] - CN: ${command} de ${pushname}`);
+    if (command) console.log(`>> [ Discord ] - C: ${command} de ${pushname}#${pushtag}`);
+    else console.log(`>> [ Discord ] - CN: ${command} de ${pushname}#${pushtag}`);
     // defs globais
     const reply = async (text) => {
         await interacao.reply(text)
