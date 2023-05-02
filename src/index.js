@@ -3,6 +3,7 @@ const { Client, Events, Collection, IntentsBitField} = require('discord.js')
 const dotenv = require('dotenv')
 const fs =  require('fs')
 const path = require('path')
+const { ilhasFabrica } = require('./utils/pc')
 //config
 dotenv.config()
 const { TOKEN, TOKEN_GPT, PREFIX } = process.env
@@ -13,6 +14,212 @@ const configuration = new Configuration({
   apiKey: TOKEN_GPT,
 });
 const openai = new OpenAIApi(configuration);
+
+const ilhaA = [
+    {
+        aluno: {
+            nome: 'Não informado',
+            turma: '',
+            email: '',
+        pc: {
+            marca: '',
+            cpu: '',
+            ram: '',
+            HDD: '',
+            wifi: false,
+            status: '',
+            patrimonio: null,
+            perifericos: {
+                mause: '',
+                teclado: '',
+                monitor: {
+                    monitor1: {
+                        marca: '',
+                        patrimonio: null
+                    },
+                    monitor2: {
+                        marca: '',
+                        patrimonio: null
+                    }
+                }
+            }
+
+        },
+        local: 'a1',
+        notebook: false,
+        last: 'Última modificação no dia 02/05/2023'
+    }
+},  {
+    aluno: {
+        nome: '',
+        turma: '',
+        email: '',
+    pc: {
+        marca: '',
+        cpu: '',
+        ram: '',
+        HDD: '',
+        wifi: false,
+        status: '',
+        patrimonio: null,
+        perifericos: {
+            mause: '',
+            teclado: '',
+            monitor: {
+                monitor1: {
+                    marca: '',
+                    patrimonio: null
+                },
+                monitor2: {
+                    marca: '',
+                    patrimonio: null
+                }
+            }
+        }
+
+    },
+    local: 'a2',
+    notebook: false,
+    last: 'Última modificação no dia 02/05/2023'
+}
+},
+{
+    aluno: {
+        nome: '',
+        turma: '',
+        email: '',
+    pc: {
+        marca: '',
+        cpu: '',
+        ram: '',
+        HDD: '',
+        wifi: false,
+        status: '',
+        patrimonio: null,
+        perifericos: {
+            mause: '',
+            teclado: '',
+            monitor: {
+                monitor1: {
+                    marca: '',
+                    patrimonio: null
+                },
+                monitor2: {
+                    marca: '',
+                    patrimonio: null
+                }
+            }
+        }
+
+    },
+    local: 'a3',
+    notebook: false,
+    last: 'Última modificação no dia 02/05/2023'
+}
+},
+{
+    aluno: {
+        nome: '',
+        turma: '',
+        email: '',
+    pc: {
+        marca: '',
+        cpu: '',
+        ram: '',
+        HDD: '',
+        wifi: false,
+        status: '',
+        patrimonio: null,
+        perifericos: {
+            mause: '',
+            teclado: '',
+            monitor: {
+                monitor1: {
+                    marca: '',
+                    patrimonio: null
+                },
+                monitor2: {
+                    marca: '',
+                    patrimonio: null
+                }
+            }
+        }
+
+    },
+    local: 'a4',
+    notebook: false,
+    last: 'Última modificação no dia 02/05/2023'
+}
+},
+{
+    aluno: {
+        nome: '',
+        turma: '',
+        email: '',
+    pc: {
+        marca: '',
+        cpu: '',
+        ram: '',
+        HDD: '',
+        wifi: false,
+        status: '',
+        patrimonio: null,
+        perifericos: {
+            mause: '',
+            teclado: '',
+            monitor: {
+                monitor1: {
+                    marca: '',
+                    patrimonio: null
+                },
+                monitor2: {
+                    marca: '',
+                    patrimonio: null
+                }
+            }
+        }
+
+    },
+    local: 'a5',
+    notebook: false,
+    last: 'Última modificação no dia 02/05/2023'
+}
+},
+{
+    aluno: {
+        nome: '',
+        turma: '',
+        email: '',
+    pc: {
+        marca: '',
+        cpu: '',
+        ram: '',
+        HDD: '',
+        wifi: false,
+        status: '',
+        patrimonio: null,
+        perifericos: {
+            mause: '',
+            teclado: '',
+            monitor: {
+                monitor1: {
+                    marca: '',
+                    patrimonio: null
+                },
+                monitor2: {
+                    marca: '',
+                    patrimonio: null
+                }
+            }
+        }
+
+    },
+    local: 'a6',
+    notebook: false,
+    last: 'Última modificação no dia 02/05/2023'
+}
+},
+]
 // inicio bot
 const client = new Client({
     intents: [
@@ -29,14 +236,10 @@ const commandsPath = path.join(__dirname, 'commands')
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'))
 
 for (const file of commandFiles) {
-    const filePath = path.join(commandsPath, file)
-    const command = require(filePath)
-    if ('data' in command && 'execute' in command) {
-        client.commands.set(command.data.name, command)
-        console.log('teste')
-    } else {
-        console.log('erro')
-    }
+    const filePath = path.join(commandsPath, file);
+    const command = require(filePath);
+    if ('data' in command && 'execute' in command) client.commands.set(command.data.name, command);
+    else console.log('erro');
 }
 // Login no discord
 client.once(Events.ClientReady, c => {
@@ -95,14 +298,31 @@ client.on(Events.InteractionCreate, async (interacao) => {
                 break
     case 'fabrica':
         const ilhas = await interacao.options.get('-ilhas').value
-        console.log(ilhas)
-        reply(`➩ ${ilhas}`)
+        if (ilhas == '-i') {
+            interacao.deferReply(`➩ Carregando, por favor espere...`)
+            await interacao.editReply(JSON.stringify(ilhasFabrica))
+                
+
+           // reply(ilhasFabrica)
+        } else if (ilhas == '-ia') {
+            const a = []
+            for (const pc of ilhaA) {
+                a.push(`Aluno`)
+            }
+            reply('deu bom a')
+        } else if (ilhas == '-ib') {
+            reply('deu bom b')
+        } else if (ilhas == '-ic') {
+            reply('deu bom c')
+        } else if (ilhas == '-id') {
+            reply('deu bom d')
+        } else if (ilhas == '-ie') {
+            reply('deu bom e')
+        } 
 
         break
         default:
-            if (!interacao.isChatInputCommand()) return
-            const comando = interacao.client.commands.get(interacao.commandName)
-            if(!comando) {
+            if(!command) {
                 reply("Comando nao encontrado...")
                 return
             } try {

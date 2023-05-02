@@ -23,29 +23,25 @@ const commands = [
         ]
     },
     {
-        name: 'fabrica',
-        description: 'Opcoes de comandos relacionados a fabrica',
+        name: 'ilhas',
+        description: 'ilhas da fabrica',
         options: [
             {
-                name: '-ilhas',
+                name: '-A',
                 description: 'ilhas da fabrica',
                 type: ApplicationCommandOptionType.String,
                 choices: [
                     {
-                        name: 'Todas as ilhas',
-                        value: '-i'
+                        name: 'a1',
+                        value: '-a1'
                     },
                     {
-                        name: 'Ilha A',
-                        value: '-ia'
+                        name: 'a2',
+                        value: '-a2'
                     },
                     {
-                        name: 'Ilha A',
-                        value: '-ia'
-                    },
-                    {
-                        name: 'Ilha B',
-                        value: '-ib'
+                        name: 'a3',
+                        value: '-a3'
                     },
 
                     {
@@ -56,13 +52,49 @@ const commands = [
                         name: 'Ilha D',
                         value: '-id'
                     },
-
+                    {
+                        name: 'Ilha E',
+                        value: '-ie'
+                    },
 
                 ],
-                required: true
-            }
+            }, 
+             {
+                name: '-estoque',
+                description: 'Estoque da fabrica',
+                type: ApplicationCommandOptionType.String,
+                choices: [
+                    {
+                        name: 'Estoque completo',
+                        value: '-es'
+                    },
+                    {
+                        name: 'Estoque RAM',
+                        value: '-e-ram'
+                    },
+                    {
+                        name: 'Estoque HDD/SSD',
+                        value: '-e-hdd'
+                    },
+                    {
+                        name: 'Estoque PC',
+                        value: '-e-pc'
+                    },
+                    {
+                        name: 'Estoque Monitor',
+                        value: '-e-m'
+                    },
+                ],
+            },
+            
+            {
+                name: '-chamado',
+                description: 'Estoque da fabrica',
+                type: ApplicationCommandOptionType.String,
+            },
         ]
-    }
+    },
+
 ]
 
 for (const file of commandFiles) {
