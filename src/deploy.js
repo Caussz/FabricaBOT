@@ -24,76 +24,22 @@ const commands = [
     },
     {
         name: 'ilhas',
-        description: 'ilhas da fabrica',
+        description: 'Retorna informações do computador selecionado',
         options: [
             {
-                name: '-A',
-                description: 'ilhas da fabrica',
+                name: 'ilha-a',
+                description: 'Ilha A da fabrica',
                 type: ApplicationCommandOptionType.String,
                 choices: [
-                    {
-                        name: 'a1',
-                        value: '-a1'
-                    },
-                    {
-                        name: 'a2',
-                        value: '-a2'
-                    },
-                    {
-                        name: 'a3',
-                        value: '-a3'
-                    },
-
-                    {
-                        name: 'Ilha C',
-                        value: '-ic'
-                    },
-                    {
-                        name: 'Ilha D',
-                        value: '-id'
-                    },
-                    {
-                        name: 'Ilha E',
-                        value: '-ie'
-                    },
-
-                ],
-            }, 
-             {
-                name: '-estoque',
-                description: 'Estoque da fabrica',
-                type: ApplicationCommandOptionType.String,
-                choices: [
-                    {
-                        name: 'Estoque completo',
-                        value: '-es'
-                    },
-                    {
-                        name: 'Estoque RAM',
-                        value: '-e-ram'
-                    },
-                    {
-                        name: 'Estoque HDD/SSD',
-                        value: '-e-hdd'
-                    },
-                    {
-                        name: 'Estoque PC',
-                        value: '-e-pc'
-                    },
-                    {
-                        name: 'Estoque Monitor',
-                        value: '-e-m'
-                    },
-                ],
-            },
-            
-            {
-                name: '-chamado',
-                description: 'Estoque da fabrica',
-                type: ApplicationCommandOptionType.String,
-            },
+                   { 
+                    name: 'a1',
+                    value: '-a1'
+                }
+                ]
+            }
         ]
-    },
+    }
+            
 
 ]
 

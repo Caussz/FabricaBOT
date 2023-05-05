@@ -18,9 +18,15 @@ const openai = new OpenAIApi(configuration);
 const ilhaA = [
     {
         aluno: {
+            locado: false,
             nome: 'Não informado',
-            turma: '',
-            email: '',
+            turma: 'Não informado',
+            email: 'Não informado',
+            totalprojetos: 0
+        },
+        local: '-a1',
+        notebook: false,
+        last: 'Última modificação no dia 05/06/2023',
         pc: {
             marca: '',
             cpu: '',
@@ -32,6 +38,7 @@ const ilhaA = [
             perifericos: {
                 mause: '',
                 teclado: '',
+                all: true,
                 monitor: {
                     monitor1: {
                         marca: '',
@@ -44,181 +51,8 @@ const ilhaA = [
                 }
             }
 
-        },
-        local: 'a1',
-        notebook: false,
-        last: 'Última modificação no dia 02/05/2023'
+        }
     }
-},  {
-    aluno: {
-        nome: '',
-        turma: '',
-        email: '',
-    pc: {
-        marca: '',
-        cpu: '',
-        ram: '',
-        HDD: '',
-        wifi: false,
-        status: '',
-        patrimonio: null,
-        perifericos: {
-            mause: '',
-            teclado: '',
-            monitor: {
-                monitor1: {
-                    marca: '',
-                    patrimonio: null
-                },
-                monitor2: {
-                    marca: '',
-                    patrimonio: null
-                }
-            }
-        }
-
-    },
-    local: 'a2',
-    notebook: false,
-    last: 'Última modificação no dia 02/05/2023'
-}
-},
-{
-    aluno: {
-        nome: '',
-        turma: '',
-        email: '',
-    pc: {
-        marca: '',
-        cpu: '',
-        ram: '',
-        HDD: '',
-        wifi: false,
-        status: '',
-        patrimonio: null,
-        perifericos: {
-            mause: '',
-            teclado: '',
-            monitor: {
-                monitor1: {
-                    marca: '',
-                    patrimonio: null
-                },
-                monitor2: {
-                    marca: '',
-                    patrimonio: null
-                }
-            }
-        }
-
-    },
-    local: 'a3',
-    notebook: false,
-    last: 'Última modificação no dia 02/05/2023'
-}
-},
-{
-    aluno: {
-        nome: '',
-        turma: '',
-        email: '',
-    pc: {
-        marca: '',
-        cpu: '',
-        ram: '',
-        HDD: '',
-        wifi: false,
-        status: '',
-        patrimonio: null,
-        perifericos: {
-            mause: '',
-            teclado: '',
-            monitor: {
-                monitor1: {
-                    marca: '',
-                    patrimonio: null
-                },
-                monitor2: {
-                    marca: '',
-                    patrimonio: null
-                }
-            }
-        }
-
-    },
-    local: 'a4',
-    notebook: false,
-    last: 'Última modificação no dia 02/05/2023'
-}
-},
-{
-    aluno: {
-        nome: '',
-        turma: '',
-        email: '',
-    pc: {
-        marca: '',
-        cpu: '',
-        ram: '',
-        HDD: '',
-        wifi: false,
-        status: '',
-        patrimonio: null,
-        perifericos: {
-            mause: '',
-            teclado: '',
-            monitor: {
-                monitor1: {
-                    marca: '',
-                    patrimonio: null
-                },
-                monitor2: {
-                    marca: '',
-                    patrimonio: null
-                }
-            }
-        }
-
-    },
-    local: 'a5',
-    notebook: false,
-    last: 'Última modificação no dia 02/05/2023'
-}
-},
-{
-    aluno: {
-        nome: '',
-        turma: '',
-        email: '',
-    pc: {
-        marca: '',
-        cpu: '',
-        ram: '',
-        HDD: '',
-        wifi: false,
-        status: '',
-        patrimonio: null,
-        perifericos: {
-            mause: '',
-            teclado: '',
-            monitor: {
-                monitor1: {
-                    marca: '',
-                    patrimonio: null
-                },
-                monitor2: {
-                    marca: '',
-                    patrimonio: null
-                }
-            }
-        }
-
-    },
-    local: 'a6',
-    notebook: false,
-    last: 'Última modificação no dia 02/05/2023'
-}
-},
 ]
 // inicio bot
 const client = new Client({
@@ -269,7 +103,7 @@ client.on('messageCreate', async (message) => {
 })
 
 client.on(Events.InteractionCreate, async (interacao) => {
-
+    const comando = interacao.client.commands.get(interacao.commandName)
     const command = interacao.commandName;
     const pushname = interacao.user.username;
     const pushtag = interacao.user.discriminator;
@@ -296,30 +130,22 @@ client.on(Events.InteractionCreate, async (interacao) => {
                  });
                  await interacao.editReply(`➩ Resposta para a pergunta: "${pergunta}"\n${completion.data.choices[0].text}`)
                 break
-    case 'fabrica':
-        const ilhas = await interacao.options.get('-ilhas').value
-        if (ilhas == '-i') {
-            interacao.deferReply(`➩ Carregando, por favor espere...`)
-            await interacao.editReply(JSON.stringify(ilhasFabrica))
-                
-
-           // reply(ilhasFabrica)
-        } else if (ilhas == '-ia') {
-            const a = []
-            for (const pc of ilhaA) {
-                a.push(`Aluno`)
+    case 'ilhas':
+        const ilhas = await interacao.options.get('ilha-a').value
+        console.log(ilhas)
+        for (const local of ilhaA) {
+            if( local.local == ilhas){
+                if (local.notebook) {
+                    reply('notebook')
+                } if(!local.aluno.locado){
+                    reply('nome')
+                } if(!local.pc.perifericos.all){
+                    reply('pc')
+                }
+               // reply(`Olá ${pushname} 👋🏼\nSegue as informações sobre o computador na posição ${ilhas} da ilha A da fábrica.\nO aluno: ${local.aluno.nome} da turma: ${local.aluno.turma} esta em um total de ${local.aluno.totalprojetos} projetos.\nEmail do aluno:${local.aluno.email}\nInformações importantes do computador:\nMarca: ${local.pc.marca}\ncpu: ${local.pc.cpu}\nram: ${local.pc.ram}\nHDD/SSD: ${local.pc.HDD}\nWIFI: ${local.pc.wifi}\nPatrimonio: ${local.pc.patrimonio}\n Informações dos periféricos:\nMonitor: ${local.pc.perifericos.monitor.monitor1.marca}\npatrimônio:${local.pc.perifericos.monitor.monitor1.patrimonio}`)
             }
-            reply('deu bom a')
-        } else if (ilhas == '-ib') {
-            reply('deu bom b')
-        } else if (ilhas == '-ic') {
-            reply('deu bom c')
-        } else if (ilhas == '-id') {
-            reply('deu bom d')
-        } else if (ilhas == '-ie') {
-            reply('deu bom e')
-        } 
-
+        }
+        //reply()
         break
         default:
             if(!command) {
