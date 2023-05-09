@@ -3,7 +3,9 @@ const { Client, Events, Collection, IntentsBitField} = require('discord.js')
 const dotenv = require('dotenv')
 const fs =  require('fs')
 const path = require('path')
-const { ilhasFabrica } = require('./utils/pc')
+// importação das ilhas
+const ilhaA = require('./utils/json/ilhaA.json');
+const ilhaB = require('./utils/json/ilhaB.json');
 //config
 dotenv.config()
 const { TOKEN, TOKEN_GPT, PREFIX } = process.env
@@ -14,46 +16,6 @@ const configuration = new Configuration({
   apiKey: TOKEN_GPT,
 });
 const openai = new OpenAIApi(configuration);
-
-const ilhaA = [
-    {
-        aluno: {
-            locado: false,
-            nome: 'Não informado',
-            turma: 'Não informado',
-            email: 'Não informado',
-            totalprojetos: 0
-        },
-        local: '-a1',
-        notebook: false,
-        last: 'Última modificação no dia 05/06/2023',
-        pc: {
-            marca: '',
-            cpu: '',
-            ram: '',
-            HDD: '',
-            wifi: false,
-            status: '',
-            patrimonio: null,
-            perifericos: {
-                mause: '',
-                teclado: '',
-                all: true,
-                monitor: {
-                    monitor1: {
-                        marca: '',
-                        patrimonio: null
-                    },
-                    monitor2: {
-                        marca: '',
-                        patrimonio: null
-                    }
-                }
-            }
-
-        }
-    }
-]
 // inicio bot
 const client = new Client({
     intents: [
@@ -109,11 +71,13 @@ client.on(Events.InteractionCreate, async (interacao) => {
     const pushtag = interacao.user.discriminator;
     const pushAvatar = interacao.user.avatar;
     const pushID = interacao.user.id;
-    const grupName = interacao.guild.name
-    const idCmd = interacao.commandId
+    const totalNameId = pushname + '#' + pushtag;
+    const ownerName = '@Causs';
+    const grupName = interacao.guild.name;
+    const idCmd = interacao.commandId;
 // log dos comandos 
-    if (command) console.log(`>> [ Discord ] - C: ${command} de ${pushname}#${pushtag}`);
-    else console.log(`>> [ Discord ] - CN: ${command} de ${pushname}#${pushtag}`);
+    if (command) console.log(`>> [ Discord ] - C: ${command} de ${totalNameId}`);
+    else console.log(`>> [ Discord ] - CN: ${command} de ${totalNameId}`);
     // defs globais
     const reply = async (text) => {
         await interacao.reply(text)
@@ -131,19 +95,19 @@ client.on(Events.InteractionCreate, async (interacao) => {
                  await interacao.editReply(`➩ Resposta para a pergunta: "${pergunta}"\n${completion.data.choices[0].text}`)
                 break
     case 'ilhas':
-        const ilhas = await interacao.options.get('ilha-a').value
-        console.log(ilhas)
+        const fabrica_ilhaA = await interacao.options.get('ilha-a').value || await interacao.options.get('ilha-b').value;
+
         for (const local of ilhaA) {
-            if( local.local == ilhas){
-                if (local.notebook) {
-                    reply('notebook')
-                } if(!local.aluno.locado){
-                    reply('nome')
-                } if(!local.pc.perifericos.all){
-                    reply('pc')
+            if( local.local == fabrica_ilhaA){
+                (local.notebook) ? reply(`Olá ${totalNameId}\nO aluno ${local.aluno.nome} esta usando seu notebook na posição ${fabrica_ilhaA}.`)
+                : (!local.aluno.locado) ? reply(`Olá ${totalNameId}\nAtualmente nenhum aluno esta ultilizando o pc ${fabrica_ilhaA}.`)
+                : (!local.pc.perifericos.all) ? reply(`Olá ${totalNameId}\nAparentemente o aluno ${local.aluno.nome} locado na posição ${fabrica_ilhaA} esta com problemas nos perifericos ou no hardware.\nPara resolver entre em contato com ${ownerName} ou com outros alunos ADM.`)
+                : (!local.aluno.locado && !local.pc.perifericos.all) ? reply(`Atualmente não possui nenhum aluno locado na posição ${fabrica_ilhaA}.\nE tambem, o computador apresenta falhas nos perifericos ou hardware.`)
+                : (local.notebook && !local.pc.perifericos.all) ? reply(`O aluno ${local.aluno.nome} esta usando seu notebook na posição ${fabrica_ilhaA}.\nPorem seus perifericos apresentão problemas.`)
+                : (!local.aluno.locado && !local.notebook) ? reply(`Olá ${totalNameId}\nAtualmente, nehum aluno esta locado na posição ${fabrica_ilhaA}.\nEsse lugar é apenas para alunos com notebooks`)
+                : reply('a')
                 }
                // reply(`Olá ${pushname} 👋🏼\nSegue as informações sobre o computador na posição ${ilhas} da ilha A da fábrica.\nO aluno: ${local.aluno.nome} da turma: ${local.aluno.turma} esta em um total de ${local.aluno.totalprojetos} projetos.\nEmail do aluno:${local.aluno.email}\nInformações importantes do computador:\nMarca: ${local.pc.marca}\ncpu: ${local.pc.cpu}\nram: ${local.pc.ram}\nHDD/SSD: ${local.pc.HDD}\nWIFI: ${local.pc.wifi}\nPatrimonio: ${local.pc.patrimonio}\n Informações dos periféricos:\nMonitor: ${local.pc.perifericos.monitor.monitor1.marca}\npatrimônio:${local.pc.perifericos.monitor.monitor1.patrimonio}`)
-            }
         }
         //reply()
         break

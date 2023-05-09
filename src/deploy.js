@@ -33,7 +33,75 @@ const commands = [
                 choices: [
                    { 
                     name: 'a1',
-                    value: '-a1'
+                    value: '-a1',
+                },
+                { 
+                    name: 'a2',
+                    value: '-a2',
+                },
+                { 
+                    name: 'a3',
+                    value: '-a3',
+                },
+                { 
+                    name: 'a4',
+                    value: '-a4',
+                },
+                { 
+                    name: 'a5',
+                    value: '-a5',
+                },
+                { 
+                    name: 'a6',
+                    value: '-a6',
+                },
+                ]
+            },
+            {
+                name: 'ilha-b',
+                description: 'Ilha B da fabrica',
+                type: ApplicationCommandOptionType.String,
+                choices: [
+                   { 
+                    name: 'b1',
+                    value: '-b1',
+                
+                }
+                ]
+            },
+            {
+                name: 'ilha-c',
+                description: 'Ilha C da fabrica',
+                type: ApplicationCommandOptionType.String,
+                choices: [
+                   { 
+                    name: 'c1',
+                    value: '-c1',
+                  
+                }
+                ]
+            },
+            {
+                name: 'ilha-d',
+                description: 'Ilha D da fabrica',
+                type: ApplicationCommandOptionType.String,
+                choices: [
+                   { 
+                    name: 'd1',
+                    value: '-d1',
+                  
+                }
+                ]
+            },
+            {
+                name: 'ilha-e',
+                description: 'Ilha E da fabrica',
+                type: ApplicationCommandOptionType.String,
+                choices: [
+                   { 
+                    name: 'e1',
+                    value: '-e1',
+              
                 }
                 ]
             }

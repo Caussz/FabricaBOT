@@ -5,8 +5,9 @@
   "main": "/src/index.js",
   "scripts": {
     "start": "node ./src/index.js",
-    "test": "test.js",
-    "build": "node ./src/deploy.js"
+    "test": "node teste.js",
+    "build": "node ./src/utils/objects.js",
+    "deploy": "node ./src/deploy.js"
   },
   "keywords": [
     "bot-discord"
